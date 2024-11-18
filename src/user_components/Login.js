@@ -1,14 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState } from 'react'
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
-    const [username, setUsername] = useState("");
+    // Dynamically updates the state based on input fields
+    const [username, setUsername] = useState("");  // this initial the value to empty at first and to update the value we call the other function
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [submitted, setSubmitted] = useState(false);
 
+
+    const navigate = useNavigate();
 
 
     const handleInput = (e) => {
@@ -19,11 +23,15 @@ export const Login = () => {
       };
       
 
-    // this will the refresh page 
+    
     const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmitted(true);
+        e.preventDefault(); // this will the refresh page, updates implicitly
         console.log({ username, email, password });
+
+        setTimeout(() => {
+        setSubmitted(true);
+        navigate("/employeelist");
+        }, 2000 )
     }
 
   return (
@@ -55,7 +63,7 @@ export const Login = () => {
         {submitted && <p className="mt-3 text-success">Form Submitted Successfully!</p>}
 
         
-        {/* <p>Don't have an account? <a href="/signup">Sign up</a></p> */}
+        <p className="mt-3">Don't have an account? <a href="/signup" className="text-primary">Sign up</a></p>
 
 
     </div>
