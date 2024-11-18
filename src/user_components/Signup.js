@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
@@ -17,74 +18,83 @@ export const Signup = () => {
     // Easier method because this after validating the name from the input the will automatically updates the respective state
 
     const handleInput = (e) => {
-        const { name, value } = e.target; // Get field name and value
+        const { name, value } = e.target; // Get or Destructure field name and value
         if (name === 'username') setUsername(value);
         if (name === 'email') setEmail(value);
         if (name === 'password') setPassword(value);
       };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevents page refresh
         setSubmitted(true);
         console.log("Form Data: " + { username, email, password });
 
-        navigate("/login");
+        // Redirect to login page after successful signup
+        setTimeout(() => {
+            navigate('/login');
+        }, 2000);
 
 
     }
 
 
   return (
-    <div className="signup-container p-4 mx-auto" style={{ maxWidth: "400px", boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", borderRadius: "8px" }}>
-        <h2>Sign Up</h2>
+    <div className="container d-flex justify-content-center align-items-center vh-100" style={{ maxWidth: "500px"}}>
+        
+        <div className="card shadow-lg p-4">
+
+        <h2 className="text-center text-primary mb-4">Sign Up</h2>
 
         <form onSubmit={handleSubmit}>
 
-            <div className="form-group">
+            {/* Username Field */}
+            <TextField
+                label="Username"
+                variant="outlined"
+                fullWidth
+                value={username}
+                name="username"
+                onChange={handleInput}
+                className="mb-3"
+                required
+              />
 
-                <label>Username: </label>
-                <input 
-                type='text' 
-                value={username} 
-                name='username' 
-                placeholder='Enter your username'
-                className="form-control my-2"
-                onChange={handleInput} 
-                required />
+            {/* Email Field */}
+            <TextField
+                label="Email"
+                variant="outlined"
+                fullWidth
+                value={email}
+                name="email"
+                onChange={handleInput}
+                className="mb-3"
+                type="email"
+                required
+              />
 
-            </div>
+            {/* Password Field */}
+            <TextField
+                label="Password"
+                variant="outlined"
+                fullWidth
+                value={password}
+                name="password"
+                onChange={handleInput}
+                className="mb-3"
+                type="password"
+                required
+              />
 
-            <div className="form-group">
-
-                <label>Email: </label>
-                <input 
-                type='email' 
-                value={email} 
-                name='email' 
-                placeholder='Enter your Email'
-                className="form-control my-2"
-                onChange={handleInput} 
-                required />
-                
-            </div>
-
-            <div className="form-group">
-
-                <label>Password: </label>
-                <input 
-                type='password' 
-                value={password} 
-                name='password' 
-                placeholder='Enter your Password'
-                className="form-control my-2"
-                onChange={handleInput} 
-                required />
-                
-            </div>
-
-            <Button variant="contained" type="submit" className="mt-3" style={{ width: "100%" }}>
+            {/* Submit Button */}
+            <Button
+                variant="contained"
+                type="submit"
+                fullWidth
+                className="mb-3"
+                style={{ backgroundColor: '#1976d2' }}
+              >
                 Sign Up
-            </Button>
+              </Button>
 
         </form>
 
@@ -94,7 +104,7 @@ export const Signup = () => {
             Already Have an account? <a href='/login' className="text-primary">Login</a>
         </p>
 
-        
+        </div>
     </div>
   )
 }
